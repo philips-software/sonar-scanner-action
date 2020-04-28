@@ -1,0 +1,54 @@
+name: "SonarQube Scanner"
+description: "Static Analysis using SonarQube"
+author: "Forest Keepers"
+branding:
+  icon: "activity"
+  color: "green"
+
+inputs:
+  projectName:
+    description: "Sonar Project name"
+    required: true
+
+  projectKey:
+    description: "Sonar Project Key"
+    required: true
+
+  baseDir:
+    description: "Project Base Directory"
+    required: false
+
+  token:
+    description: "Sonar Login Token"
+    required: true
+
+  url:
+    description: "Sonar Server url"
+    required: true
+
+  scmProvider:
+    description: "SCM provider"
+    required: false
+    default: "git"
+
+  sourceEncoding:
+    description: "Encoding of the source files"
+    required: false
+    default: "UTF-8"
+
+  enablePullRequestDecoration:
+    description: "Decorate a pull request. PR, branch and base are extracted from the pull request event"
+    required: false
+
+  onlyConfig:
+    description: "Generate sonar configuration, scanner will not be invoked. Sonar parameters are available as output"
+    required: false
+    default: false
+
+outputs:
+  sonarParameters:
+    description: Sonar parameters generate based on input.
+
+runs:
+  using: docker
+  image: Dockerfile
