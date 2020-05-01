@@ -9,17 +9,17 @@
     "test:watch": "jest --watch --watchAll"
   },
   "dependencies": {
-    "@actions/core": "^1.2.3",
-    "@actions/exec": "^1.0.3",
+    "@actions/core": "^1.2.4",
+    "@actions/exec": "^1.0.4",
     "@actions/github": "^2.1.1"
   },
   "devDependencies": {
     "@types/jest": "^25.1.0",
-    "@types/node": "^13.5.1",
+    "@types/node": "^13.13.4",
     "@zeit/ncc": "^0.22.1",
-    "jest": "^25.1.0",
-    "jest-cli": "^25.3.0",
-    "ts-jest": "^25.0.0",
+    "jest": "^25.5.3",
+    "jest-cli": "^25.5.3",
+    "ts-jest": "^25.4.0",
     "typescript": "^3.7.5"
   }
 }
