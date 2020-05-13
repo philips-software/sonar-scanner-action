@@ -83,6 +83,7 @@ sonarqube:
         projectKey: project.key.from.sonar.qube
         url: https://your.sonar.instance.io/
         enablePullRequestDecoration: true
+        onlyConfig: true
     - name: Run sonar scanner
         uses: docker://openjdk:11.0.6-jdk-slim
         with:
