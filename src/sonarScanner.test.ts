@@ -20,7 +20,7 @@ describe('SonarQube Scanner Action', () => {
     process.env['INPUT_SCMPROVIDER'] = 'git';
     process.env['INPUT_SOURCEENCODING'] = 'UTF-8';
     process.env['INPUT_ENABLEPULLREQUESTDECORATION'] = 'false';
-    delete process.env['INPUT_ONLYCONFIG'];
+    process.env['INPUT_ONLYCONFIG'] = 'false';
   });
 
   it.each`

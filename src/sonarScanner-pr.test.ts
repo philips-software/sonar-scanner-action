@@ -29,6 +29,7 @@ describe('SonarQube Scanner Action for a Pull Request', () => {
     process.env['INPUT_URL'] = 'http://example.com';
     process.env['INPUT_SCMPROVIDER'] = 'git';
     process.env['INPUT_SOURCEENCODING'] = 'UTF-8';
+    process.env['INPUT_ONLYCONFIG'] = 'false';
   });
 
   it('starts the action for pull request decoration.', async () => {

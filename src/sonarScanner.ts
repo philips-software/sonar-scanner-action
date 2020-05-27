@@ -18,7 +18,9 @@ export const sonarScanner = async () => {
   const enablePullRequestDecoration = JSON.parse(
     core.getInput('enablePullRequestDecoration', { required: false }),
   );
-  const onlyConfig = core.getInput('onlyConfig', { required: false });
+  const onlyConfig = JSON.parse(
+    core.getInput('onlyConfig', { required: false }),
+  );
 
   const sonarParameters: string[] = [
     `-Dsonar.login=${token}`,
@@ -44,6 +46,7 @@ export const sonarScanner = async () => {
     scmProvider                 : ${scmProvider}
     sourceEncoding              : ${sourceEncoding}
     enablePullRequestDecoration : ${enablePullRequestDecoration}
+    onlyConfig                  : ${onlyConfig}
   `);
 
   const pr: any = context.payload.pull_request;
