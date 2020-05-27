@@ -2308,8 +2308,10 @@ exports.sonarScanner = async () => {
     const url = core.getInput('url', { required: true });
     const scmProvider = core.getInput('scmProvider', { required: true });
     const sourceEncoding = core.getInput('sourceEncoding', { required: false });
-    const enablePullRequestDecoration = JSON.parse(core.getInput('enablePullRequestDecoration', { required: false }));
-    const onlyConfig = JSON.parse(core.getInput('onlyConfig', { required: false }));
+    const enablePullRequestDecoration = core
+        .getInput('enablePullRequestDecoration', { required: false })
+        .toLowerCase() === 'true';
+    const onlyConfig = core.getInput('onlyConfig', { required: false }).toLowerCase() === 'true';
     const sonarParameters = [
         `-Dsonar.login=${token}`,
         `-Dsonar.host.url=${url}`,
