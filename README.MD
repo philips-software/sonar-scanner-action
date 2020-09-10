@@ -11,17 +11,18 @@ The action support the following features
 
 ## Action input parameters
 
-| Parameter                   | Description                                                                                           | required | default |
-| --------------------------- | :---------------------------------------------------------------------------------------------------- | -------- | ------- |
-| projectName                 | Your application's name in SonarQube                                                                  | yes      |         |
-| projectKey                  | Unique value for your project in SonarQube                                                            | yes      |         |
-| baseDir                     | Relative path to your sonar.properties file (default: `.`)                                            | no       | `.`     |
-| token                       | SonarQube login token                                                                                 | yes      |         |
-| url                         | SonarQube server url                                                                                  | yes      |         |
-| scmProvider                 | SCM provider                                                                                          | no       | `git`   |
-| sourceEncoding              | Encoding of the source files                                                                          | no       | `UTF-8` |
-| enablePullRequestDecoration | Decorate a pull request. PR, branch and base are extracted from the pull                              | no       | `false` |
-| onlyConfig                  | "Generate sonar configuration, scanner will not be invoked. Sonar parameters are available as output. | no       | `false` |
+| Parameter                   | Description                                                                                            | required | default |
+| --------------------------- | :----------------------------------------------------------------------------------------------------- | -------- | ------- |
+| projectName                 | Your application's name in SonarQube                                                                   | yes      |         |
+| projectKey                  | Unique value for your project in SonarQube                                                             | yes      |         |
+| baseDir                     | Relative path to your sonar.properties file (default: `.`)                                             | no       | `.`     |
+| token                       | SonarQube login token                                                                                  | yes      |         |
+| url                         | SonarQube server url                                                                                   | yes      |         |
+| scmProvider                 | SCM provider                                                                                           | no       | `git`   |
+| sourceEncoding              | Encoding of the source files                                                                           | no       | `UTF-8` |
+| enablePullRequestDecoration | Decorate a pull request. PR, branch and base are extracted from the pull                               | no       | `false` |
+| onlyConfig                  | "Generate sonar configuration, scanner will not be invoked. Sonar parameters are available as output.  | no       | `false` |
+| isCommunityEdition          | Flag your SonarQube instance as Community edition. Disables PRs/branches and defaults branch to master | no       | `false` |
 
 ## Action output parameters
 
@@ -64,6 +65,22 @@ steps:
       projectKey: project.key.from.sonar.qube
       url: https://your.sonar.instance.io/
       enablePullRequestDecoration: true
+```
+
+### Invoke the scanner with SonarQube Community edition
+
+```yml
+sonarqube:
+  name: SonarQube
+  runs-on: self-hosted
+  steps:
+    - uses: philips-software/sonar-scanner-action@<version>
+      with:
+        token: ${{ secrets.SONARQUBE_TOKEN }}
+        projectName: My Project Name
+        projectKey: project.key.from.sonar.qube
+        url: https://your.sonar.instance.io/
+        isCommunityEdition: true
 ```
 
 ### Create configuration for the scanner with pull request decoration

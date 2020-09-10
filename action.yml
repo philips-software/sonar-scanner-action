@@ -45,6 +45,11 @@ inputs:
     required: false
     default: false
 
+  isCommunityEdition:
+    description: "Flags if your SonarQube instance is Community edition. Skips setting PRs/branches and defaults to master"
+    required: false
+    default: false
+
 outputs:
   sonarParameters:
     description: Sonar parameters generate based on input.
