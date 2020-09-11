@@ -30,6 +30,7 @@ describe('SonarQube Scanner Action for a Pull Request', () => {
     process.env['INPUT_SCMPROVIDER'] = 'git';
     process.env['INPUT_SOURCEENCODING'] = 'UTF-8';
     process.env['INPUT_ONLYCONFIG'] = 'false';
+    process.env['INPUT_ISCOMMUNITYEDITION'] = 'false';
   });
 
   it('starts the action for pull request decoration.', async () => {
@@ -52,6 +53,21 @@ describe('SonarQube Scanner Action for a Pull Request', () => {
 
   it('starts the action for pull request without decoration.', async () => {
     process.env['INPUT_ENABLEPULLREQUESTDECORATION'] = 'false';
+
+    await sonarScanner();
+    expect(exec).toHaveBeenCalledWith('sonar-scanner', [
+      '-Dsonar.login=Dummy-Security-Token',
+      '-Dsonar.host.url=http://example.com',
+      '-Dsonar.projectKey=key',
+      "-Dsonar.projectName='HelloWorld'",
+      '-Dsonar.scm.provider=git',
+      '-Dsonar.sourceEncoding=UTF-8',
+      '-Dsonar.projectBaseDir=.',
+    ]);
+  });
+
+  it('skips setting PR and uses default master if Community edition', async () => {
+    process.env['INPUT_ISCOMMUNITYEDITION'] = 'true';
 
     await sonarScanner();
     expect(exec).toHaveBeenCalledWith('sonar-scanner', [

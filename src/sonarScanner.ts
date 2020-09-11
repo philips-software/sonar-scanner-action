@@ -21,6 +21,10 @@ export const sonarScanner = async () => {
       .toLowerCase() === 'true';
   const onlyConfig =
     core.getInput('onlyConfig', { required: false }).toLowerCase() === 'true';
+  const isCommunityEdition =
+    core.getInput('isCommunityEdition', {
+      required: false,
+    }) === 'true';
 
   const sonarParameters: string[] = [
     `-Dsonar.login=${token}`,
@@ -47,29 +51,32 @@ export const sonarScanner = async () => {
     sourceEncoding              : ${sourceEncoding}
     enablePullRequestDecoration : ${enablePullRequestDecoration}
     onlyConfig                  : ${onlyConfig}
+    isCommunityEdition          : ${isCommunityEdition}
   `);
 
-  const pr: any = context.payload.pull_request;
-  if (!pr) {
-    const branchName = getBranchOrTagName(context.ref);
-    sonarParameters.push(`-Dsonar.branch.name=${branchName}`);
-    core.info(`
-    -- Configuration for branch:
-       branchName               : ${branchName}
-    `);
-  }
+  if (!isCommunityEdition) {
+    const pr: any = context.payload.pull_request;
+    if (!pr) {
+      const branchName = getBranchOrTagName(context.ref);
+      sonarParameters.push(`-Dsonar.branch.name=${branchName}`);
+      core.info(`
+      -- Configuration for branch:
+         branchName               : ${branchName}
+      `);
+    }
 
-  if (enablePullRequestDecoration && pr) {
-    core.info(`
-    -- Configuration for pull request decoration:
-       Pull request number       : ${pr.number}
-       Pull request branch       : ${pr.base.ref}
-       Pull request base branch  : ${pr.head.ref}
-    `);
+    if (enablePullRequestDecoration && pr) {
+      core.info(`
+      -- Configuration for pull request decoration:
+         Pull request number       : ${pr.number}
+         Pull request branch       : ${pr.base.ref}
+         Pull request base branch  : ${pr.head.ref}
+      `);
 
-    sonarParameters.push(`-Dsonar.pullrequest.key=${pr.number}`);
-    sonarParameters.push(`-Dsonar.pullrequest.base=${pr.base.ref}`);
-    sonarParameters.push(`-Dsonar.pullrequest.branch=${pr.head.ref}`);
+      sonarParameters.push(`-Dsonar.pullrequest.key=${pr.number}`);
+      sonarParameters.push(`-Dsonar.pullrequest.base=${pr.base.ref}`);
+      sonarParameters.push(`-Dsonar.pullrequest.branch=${pr.head.ref}`);
+    }
   }
 
   if (!onlyConfig) {

@@ -21,6 +21,7 @@ describe('SonarQube Scanner Action', () => {
     process.env['INPUT_SOURCEENCODING'] = 'UTF-8';
     process.env['INPUT_ENABLEPULLREQUESTDECORATION'] = 'false';
     process.env['INPUT_ONLYCONFIG'] = 'false';
+    process.env['INPUT_ISCOMMUNITYEDITION'] = 'false';
   });
 
   it.each`
@@ -56,7 +57,7 @@ describe('SonarQube Scanner Action', () => {
     ]);
   });
 
-  it('starts the action when baseDir  set', async () => {
+  it('starts the action when baseDir is set', async () => {
     process.env['INPUT_BASEDIR'] = 'src/';
 
     await sonarScanner();
@@ -69,6 +70,22 @@ describe('SonarQube Scanner Action', () => {
       '-Dsonar.sourceEncoding=UTF-8',
       '-Dsonar.projectBaseDir=src/',
       '-Dsonar.branch.name=develop',
+    ]);
+
+    delete process.env['INPUT_BASEDIR'];
+  });
+
+  it('Skips setting branch/pr if community edition', async () => {
+    process.env['INPUT_ISCOMMUNITYEDITION'] = 'true';
+
+    await sonarScanner();
+    expect(exec).toHaveBeenCalledWith('sonar-scanner', [
+      '-Dsonar.login=Dummy-Security-Token',
+      '-Dsonar.host.url=http://example.com',
+      '-Dsonar.projectKey=key',
+      "-Dsonar.projectName='Hello World'",
+      '-Dsonar.scm.provider=git',
+      '-Dsonar.sourceEncoding=UTF-8',
     ]);
   });
 

@@ -2312,6 +2312,9 @@ exports.sonarScanner = async () => {
         .getInput('enablePullRequestDecoration', { required: false })
         .toLowerCase() === 'true';
     const onlyConfig = core.getInput('onlyConfig', { required: false }).toLowerCase() === 'true';
+    const isCommunityEdition = core.getInput('isCommunityEdition', {
+        required: false,
+    });
     const sonarParameters = [
         `-Dsonar.login=${token}`,
         `-Dsonar.host.url=${url}`,
@@ -2335,26 +2338,29 @@ exports.sonarScanner = async () => {
     sourceEncoding              : ${sourceEncoding}
     enablePullRequestDecoration : ${enablePullRequestDecoration}
     onlyConfig                  : ${onlyConfig}
+    isCommunityEdition          : ${isCommunityEdition}
   `);
-    const pr = github_1.context.payload.pull_request;
-    if (!pr) {
-        const branchName = getBranchOrTagName(github_1.context.ref);
-        sonarParameters.push(`-Dsonar.branch.name=${branchName}`);
-        core.info(`
-    -- Configuration for branch:
-       branchName               : ${branchName}
-    `);
-    }
-    if (enablePullRequestDecoration && pr) {
-        core.info(`
-    -- Configuration for pull request decoration:
-       Pull request number       : ${pr.number}
-       Pull request branch       : ${pr.base.ref}
-       Pull request base branch  : ${pr.head.ref}
-    `);
-        sonarParameters.push(`-Dsonar.pullrequest.key=${pr.number}`);
-        sonarParameters.push(`-Dsonar.pullrequest.base=${pr.base.ref}`);
-        sonarParameters.push(`-Dsonar.pullrequest.branch=${pr.head.ref}`);
+    if (!isCommunityEdition) {
+        const pr = github_1.context.payload.pull_request;
+        if (!pr) {
+            const branchName = getBranchOrTagName(github_1.context.ref);
+            sonarParameters.push(`-Dsonar.branch.name=${branchName}`);
+            core.info(`
+      -- Configuration for branch:
+         branchName               : ${branchName}
+      `);
+        }
+        if (enablePullRequestDecoration && pr) {
+            core.info(`
+      -- Configuration for pull request decoration:
+         Pull request number       : ${pr.number}
+         Pull request branch       : ${pr.base.ref}
+         Pull request base branch  : ${pr.head.ref}
+      `);
+            sonarParameters.push(`-Dsonar.pullrequest.key=${pr.number}`);
+            sonarParameters.push(`-Dsonar.pullrequest.base=${pr.base.ref}`);
+            sonarParameters.push(`-Dsonar.pullrequest.branch=${pr.head.ref}`);
+        }
     }
     if (!onlyConfig) {
         core.startGroup('Running SonarQube');
