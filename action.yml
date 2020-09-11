@@ -1,4 +1,4 @@
-name: "SonarQube Scanner"
+name: "SonarQube Scanner Action"
 description: "Static Analysis using SonarQube"
 author: "Forest Keepers"
 branding:
