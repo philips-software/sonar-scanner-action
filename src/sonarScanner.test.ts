@@ -75,6 +75,24 @@ describe('SonarQube Scanner Action', () => {
     delete process.env['INPUT_BASEDIR'];
   });
 
+  it('starts the action when javaBinariesDir is set', async () => {
+    process.env['INPUT_JAVABINARIESDIR'] = 'build/classes';
+
+    await sonarScanner();
+    expect(exec).toHaveBeenCalledWith('sonar-scanner', [
+      '-Dsonar.login=Dummy-Security-Token',
+      '-Dsonar.host.url=http://example.com',
+      '-Dsonar.projectKey=key',
+      "-Dsonar.projectName='Hello World'",
+      '-Dsonar.scm.provider=git',
+      '-Dsonar.sourceEncoding=UTF-8',
+      '-Dsonar.java.binaries=build/classes',
+      '-Dsonar.branch.name=develop',
+    ]);
+
+    delete process.env['INPUT_JAVABINARIESDIR'];
+  });
+
   it('Skips setting branch/pr if community edition', async () => {
     process.env['INPUT_ISCOMMUNITYEDITION'] = 'true';
 

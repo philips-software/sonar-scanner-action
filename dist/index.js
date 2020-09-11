@@ -2314,7 +2314,8 @@ exports.sonarScanner = async () => {
     const onlyConfig = core.getInput('onlyConfig', { required: false }).toLowerCase() === 'true';
     const isCommunityEdition = core.getInput('isCommunityEdition', {
         required: false,
-    });
+    }) === 'true';
+    const javaBinariesDir = core.getInput('javaBinariesDir', { required: false });
     const sonarParameters = [
         `-Dsonar.login=${token}`,
         `-Dsonar.host.url=${url}`,
@@ -2323,8 +2324,11 @@ exports.sonarScanner = async () => {
         `-Dsonar.scm.provider=${scmProvider}`,
         `-Dsonar.sourceEncoding=${sourceEncoding}`,
     ];
-    if (baseDir && baseDir.length > 0) {
+    if (baseDir && baseDir.trim().length > 0) {
         sonarParameters.push(`-Dsonar.projectBaseDir=${baseDir}`);
+    }
+    if (javaBinariesDir && javaBinariesDir.trim().length > 0) {
+        sonarParameters.push(`-Dsonar.java.binaries=${javaBinariesDir}`);
     }
     core.info(`
     Using Configuration:
@@ -2339,6 +2343,7 @@ exports.sonarScanner = async () => {
     enablePullRequestDecoration : ${enablePullRequestDecoration}
     onlyConfig                  : ${onlyConfig}
     isCommunityEdition          : ${isCommunityEdition}
+    javaBinariesDir             : ${javaBinariesDir}
   `);
     if (!isCommunityEdition) {
         const pr = github_1.context.payload.pull_request;

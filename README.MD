@@ -23,6 +23,7 @@ The action support the following features
 | enablePullRequestDecoration | Decorate a pull request. PR, branch and base are extracted from the pull                               | no       | `false` |
 | onlyConfig                  | "Generate sonar configuration, scanner will not be invoked. Sonar parameters are available as output.  | no       | `false` |
 | isCommunityEdition          | Flag your SonarQube instance as Community edition. Disables PRs/branches and defaults branch to master | no       | `false` |
+| javaBinariesDir             | Specifies the path of your compiled java binaries. Only needed if invoking scanner on java repo        | no       |         |
 
 ## Action output parameters
 
@@ -83,10 +84,26 @@ sonarqube:
         isCommunityEdition: true
 ```
 
+### Invoke the scanner with Java repository
+
+```yml
+sonarqube:
+  name: SonarQube
+  runs-on: self-hosted
+  steps:
+    - uses: philips-software/sonar-scanner-action@<version>
+      with:
+        token: ${{ secrets.SONARQUBE_TOKEN }}
+        projectName: My Project Name
+        projectKey: project.key.from.sonar.qube
+        url: https://your.sonar.instance.io/
+        baseDir: .
+        javaBinariesDir: path/to/binaries
+```
+
 ### Create configuration for the scanner with pull request decoration
 
 ```yml
-
   name: SonarQube
   runs-on: self-hosted
   steps:

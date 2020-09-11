@@ -25,6 +25,7 @@ export const sonarScanner = async () => {
     core.getInput('isCommunityEdition', {
       required: false,
     }) === 'true';
+  const javaBinariesDir = core.getInput('javaBinariesDir', { required: false });
 
   const sonarParameters: string[] = [
     `-Dsonar.login=${token}`,
@@ -35,8 +36,12 @@ export const sonarScanner = async () => {
     `-Dsonar.sourceEncoding=${sourceEncoding}`,
   ];
 
-  if (baseDir && baseDir.length > 0) {
+  if (baseDir && baseDir.trim().length > 0) {
     sonarParameters.push(`-Dsonar.projectBaseDir=${baseDir}`);
+  }
+
+  if (javaBinariesDir && javaBinariesDir.trim().length > 0) {
+    sonarParameters.push(`-Dsonar.java.binaries=${javaBinariesDir}`);
   }
 
   core.info(`
@@ -52,6 +57,7 @@ export const sonarScanner = async () => {
     enablePullRequestDecoration : ${enablePullRequestDecoration}
     onlyConfig                  : ${onlyConfig}
     isCommunityEdition          : ${isCommunityEdition}
+    javaBinariesDir             : ${javaBinariesDir}
   `);
 
   if (!isCommunityEdition) {
