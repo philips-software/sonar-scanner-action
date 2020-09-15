@@ -20,17 +20,37 @@ jest.mock('@actions/github', () => ({
   },
 }));
 
+const token = 'Dummy-Security-Token';
+const url = 'http://example.com';
+const projectKey = 'key';
+const projectName = 'Hello, World';
+const scm = 'git';
+const encoding = 'UTF-8';
+const qualityGate = 'false';
+
+const defaultFlags = [
+  `-Dsonar.login=${token}`,
+  `-Dsonar.host.url=${url}`,
+  `-Dsonar.projectKey=${projectKey}`,
+  `-Dsonar.projectName='${projectName}'`,
+  `-Dsonar.scm.provider=${scm}`,
+  `-Dsonar.sourceEncoding=${encoding}`,
+  `-Dsonar.qualitygate.wait=${qualityGate}`,
+];
+
 describe('SonarQube Scanner Action for a Pull Request', () => {
   beforeEach(() => {
-    process.env['INPUT_PROJECTNAME'] = 'HelloWorld';
-    process.env['INPUT_PROJECTKEY'] = 'key';
-    process.env['INPUT_BASEDIR'] = '.';
-    process.env['INPUT_TOKEN'] = 'Dummy-Security-Token';
-    process.env['INPUT_URL'] = 'http://example.com';
-    process.env['INPUT_SCMPROVIDER'] = 'git';
-    process.env['INPUT_SOURCEENCODING'] = 'UTF-8';
+    process.env['INPUT_PROJECTNAME'] = projectName;
+    process.env['INPUT_PROJECTKEY'] = projectKey;
+    process.env['INPUT_TOKEN'] = token;
+    process.env['INPUT_URL'] = url;
+    process.env['INPUT_SCMPROVIDER'] = scm;
+    process.env['INPUT_SOURCEENCODING'] = encoding;
+    process.env['INPUT_RUNQUALITYGATE'] = qualityGate;
     process.env['INPUT_ONLYCONFIG'] = 'false';
     process.env['INPUT_ISCOMMUNITYEDITION'] = 'false';
+    process.env['INPUT_BASEDIR'] = '.';
+
   });
 
   it('starts the action for pull request decoration.', async () => {
@@ -38,12 +58,7 @@ describe('SonarQube Scanner Action for a Pull Request', () => {
 
     await sonarScanner();
     expect(exec).toHaveBeenCalledWith('sonar-scanner', [
-      '-Dsonar.login=Dummy-Security-Token',
-      '-Dsonar.host.url=http://example.com',
-      '-Dsonar.projectKey=key',
-      "-Dsonar.projectName='HelloWorld'",
-      '-Dsonar.scm.provider=git',
-      '-Dsonar.sourceEncoding=UTF-8',
+      ...defaultFlags,
       '-Dsonar.projectBaseDir=.',
       '-Dsonar.pullrequest.key=101',
       '-Dsonar.pullrequest.base=master',
@@ -56,12 +71,7 @@ describe('SonarQube Scanner Action for a Pull Request', () => {
 
     await sonarScanner();
     expect(exec).toHaveBeenCalledWith('sonar-scanner', [
-      '-Dsonar.login=Dummy-Security-Token',
-      '-Dsonar.host.url=http://example.com',
-      '-Dsonar.projectKey=key',
-      "-Dsonar.projectName='HelloWorld'",
-      '-Dsonar.scm.provider=git',
-      '-Dsonar.sourceEncoding=UTF-8',
+      ...defaultFlags,
       '-Dsonar.projectBaseDir=.',
     ]);
   });
@@ -71,12 +81,7 @@ describe('SonarQube Scanner Action for a Pull Request', () => {
 
     await sonarScanner();
     expect(exec).toHaveBeenCalledWith('sonar-scanner', [
-      '-Dsonar.login=Dummy-Security-Token',
-      '-Dsonar.host.url=http://example.com',
-      '-Dsonar.projectKey=key',
-      "-Dsonar.projectName='HelloWorld'",
-      '-Dsonar.scm.provider=git',
-      '-Dsonar.sourceEncoding=UTF-8',
+      ...defaultFlags,
       '-Dsonar.projectBaseDir=.',
     ]);
   });

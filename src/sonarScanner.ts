@@ -25,6 +25,11 @@ export const sonarScanner = async () => {
     core.getInput('isCommunityEdition', {
       required: false,
     }) === 'true';
+  const runQualityGate =
+    core.getInput('runQualityGate', { required: false }) === 'true';
+  const qualityGateTimeout = core.getInput('qualityGateTimeout', {
+    required: false,
+  });
 
   const sonarParameters: string[] = [
     `-Dsonar.login=${token}`,
@@ -33,10 +38,17 @@ export const sonarScanner = async () => {
     `-Dsonar.projectName=\'${projectName}\'`,
     `-Dsonar.scm.provider=${scmProvider}`,
     `-Dsonar.sourceEncoding=${sourceEncoding}`,
+    `-Dsonar.qualitygate.wait=${runQualityGate}`,
   ];
 
   if (baseDir && baseDir.length > 0) {
     sonarParameters.push(`-Dsonar.projectBaseDir=${baseDir}`);
+  }
+
+  if (qualityGateTimeout && !runQualityGate) {
+    core.warning('\"runQualityGate\" not set, ignoring provided quality gate timeout');
+  } else if (qualityGateTimeout && runQualityGate) {
+    sonarParameters.push(`-Dsonar.qualitygate.timeout=${qualityGateTimeout}`)
   }
 
   core.info(`
@@ -52,6 +64,8 @@ export const sonarScanner = async () => {
     enablePullRequestDecoration : ${enablePullRequestDecoration}
     onlyConfig                  : ${onlyConfig}
     isCommunityEdition          : ${isCommunityEdition}
+    runQualityGate              : ${runQualityGate}
+    qualityGateTimeout          : ${qualityGateTimeout}
   `);
 
   if (!isCommunityEdition) {
