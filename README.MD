@@ -23,6 +23,8 @@ The action support the following features
 | enablePullRequestDecoration | Decorate a pull request. PR, branch and base are extracted from the pull                               | no       | `false` |
 | onlyConfig                  | "Generate sonar configuration, scanner will not be invoked. Sonar parameters are available as output.  | no       | `false` |
 | isCommunityEdition          | Flag your SonarQube instance as Community edition. Disables PRs/branches and defaults branch to master | no       | `false` |
+| runQualityGate              | Run quality gate along with the scanner                                                                | no       | `false` |
+| qualityGateTimeout          | Number of seconds to wait before failing. SonarQube default is 300                                     | no       |         |
 
 ## Action output parameters
 

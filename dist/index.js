@@ -2314,6 +2314,10 @@ exports.sonarScanner = async () => {
     const onlyConfig = core.getInput('onlyConfig', { required: false }).toLowerCase() === 'true';
     const isCommunityEdition = core.getInput('isCommunityEdition', {
         required: false,
+    }) === 'true';
+    const runQualityGate = core.getInput('runQualityGate', { required: false }) === 'true';
+    const qualityGateTimeout = core.getInput('qualityGateTimeout', {
+        required: false,
     });
     const sonarParameters = [
         `-Dsonar.login=${token}`,
@@ -2322,9 +2326,16 @@ exports.sonarScanner = async () => {
         `-Dsonar.projectName=\'${projectName}\'`,
         `-Dsonar.scm.provider=${scmProvider}`,
         `-Dsonar.sourceEncoding=${sourceEncoding}`,
+        `-Dsonar.qualitygate.wait=${runQualityGate}`,
     ];
     if (baseDir && baseDir.length > 0) {
         sonarParameters.push(`-Dsonar.projectBaseDir=${baseDir}`);
+    }
+    if (qualityGateTimeout && !runQualityGate) {
+        core.warning('\"runQualityGate\" not set, ignoring provided quality gate timeout');
+    }
+    else if (qualityGateTimeout && runQualityGate) {
+        sonarParameters.push(`-Dsonar.qualitygate.timeout=${qualityGateTimeout}`);
     }
     core.info(`
     Using Configuration:
@@ -2339,6 +2350,8 @@ exports.sonarScanner = async () => {
     enablePullRequestDecoration : ${enablePullRequestDecoration}
     onlyConfig                  : ${onlyConfig}
     isCommunityEdition          : ${isCommunityEdition}
+    runQualityGate              : ${runQualityGate}
+    qualityGateTimeout          : ${qualityGateTimeout}
   `);
     if (!isCommunityEdition) {
         const pr = github_1.context.payload.pull_request;

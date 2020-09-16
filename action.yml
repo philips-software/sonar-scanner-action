@@ -50,6 +50,14 @@ inputs:
     required: false
     default: false
 
+  runQualityGate:
+    description: Run the quality gate associated to this repo in SonarQube
+    required: false
+
+  qualityGateTimeout:
+    description: Number of seconds until build is failed for not passing quailty gate. Defaulted to 300 by SonarQube
+    required: false
+
 outputs:
   sonarParameters:
     description: Sonar parameters generate based on input.
