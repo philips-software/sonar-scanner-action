@@ -83,8 +83,8 @@ export const sonarScanner = async () => {
       core.info(`
       -- Configuration for pull request decoration:
          Pull request number       : ${pr.number}
-         Pull request branch       : ${pr.base.ref}
-         Pull request base branch  : ${pr.head.ref}
+         Pull request branch       : ${pr.head.ref}
+         Pull request base branch  : ${pr.base.ref}
       `);
 
       sonarParameters.push(`-Dsonar.pullrequest.key=${pr.number}`);
