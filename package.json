@@ -9,7 +9,7 @@
     "test:watch": "jest --watch --watchAll"
   },
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.4.0",
     "@actions/exec": "^1.1.0",
     "@actions/github": "^2.1.1"
   },
