@@ -111,6 +111,28 @@ sonarqube:
 
 ```
 
+## CONTRIBUTING
+
+Please look at [CONTRIBUTING.md](./CONTRIBUTING.md) on how to contribute.
+
+### Test locally
+
+You can test the action locally by building the docker image and use with the correct parameters.
+
+#### Docker build
+
+``` bash
+docker build . -t sonar
+```
+
+#### Docker run
+
+Set your environment variables as given in the statement below. All the fields after a `-e`:
+
+``` bash
+docker run -e INPUT_PROJECTNAME -e INPUT_PROJECTKEY -e INPUT_URL -e INPUT_BASEDIR -e INPUT_SCMPROVIDER -e INPUT_SOURCEENCODING -e INPUT_ENABLEPULLREQUESTDECORATION -e INPUT_ONLYCONFIG -e INPUT_ISCOMMUNITYEDITION -e INPUT_RUNQUALITYGATE -e INPUT_QUALITYGATETIMEOUT -e INPUT_TOKEN -e GITHUB_REF -e GITHUB_SHA sonar
+```
+
 ## Philips Forest
 
 This module is part of the Philips Forest.
