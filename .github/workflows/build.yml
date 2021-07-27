@@ -6,7 +6,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: philipssoftware/sonar-scanner:4.3
+    container: philipssoftware/sonar-scanner:4.6.2.2472
 
     steps:
       - uses: actions/checkout@v2
