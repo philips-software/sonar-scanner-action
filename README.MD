@@ -32,6 +32,16 @@ The action support the following features
 | --------------- | :--------------------------------------- |
 | sonarParameters | Sonar parameters generate based on input |
 
+## Environment
+
+| Tool         | Version    |
+| ------------ | :--------- |
+| SonarScanner | 4.6.2.2472 |
+| Java         | 11.0.11    |
+| Node         | v16.4.2    |
+| Python       | 2.7.16     |
+| Python       | 3.7.3      |
+
 ## Sample Configuration
 
 To prevent your token from showing in the runner's output, it is advised to store the token configuration inside of a github secret variable.
