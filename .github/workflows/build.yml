@@ -16,3 +16,10 @@ jobs:
         run: yarn test
       - name: Build distribution
         run: yarn build
+
+      - name: Update dist in the repository
+        if: github.event_name != 'pull_request'
+        uses: stefanzweifel/git-auto-commit-action@v4.9.2
+        with:
+          commit_message: 'chore(ci): Updating dist'
+          file_pattern: dist/*
