@@ -10,7 +10,42 @@ The action support the following features
 - Export scanner configuration for consuming by e.g. `gradle`, `maven`.
 
 <!-- action-docs-description -->
+## Description
+
+Static Analysis using SonarQube
+
+
+<!-- action-docs-description -->
 <!-- action-docs-inputs -->
+## Inputs
+
+| parameter | description | required | default |
+| - | - | - | - |
+| projectName | Sonar Project name | `true` |  |
+| projectKey | Sonar Project Key | `true` |  |
+| baseDir | Project Base Directory | `false` |  |
+| token | Sonar Login Token | `true` |  |
+| url | Sonar Server url | `true` |  |
+| scmProvider | SCM provider | `false` | git |
+| sourceEncoding | Encoding of the source files | `false` | UTF-8 |
+| enablePullRequestDecoration | Decorate a pull request. PR, branch and base are extracted from the pull request event | `false` |  |
+| onlyConfig | Generate sonar configuration, scanner will not be invoked. Sonar parameters are available as output | `false` |  |
+| isCommunityEdition | Flags if your SonarQube instance is Community edition. Skips setting PRs/branches and defaults to master | `false` |  |
+| runQualityGate | Run the quality gate associated to this repo in SonarQube | `false` |  |
+| qualityGateTimeout | Number of seconds until build is failed for not passing quailty gate. Defaulted to 300 by SonarQube | `false` |  |
+
+
+
+<!-- action-docs-inputs -->
+<!-- action-docs-outputs -->
+## Outputs
+
+| parameter | description |
+| - | - |
+| sonarParameters | Sonar parameters generate based on input. |
+
+
+
 <!-- action-docs-outputs -->
 
 ## Environment
