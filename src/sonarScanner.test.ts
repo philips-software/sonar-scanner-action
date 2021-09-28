@@ -58,7 +58,9 @@ describe('SonarQube Scanner Action', () => {
       try {
         await sonarScanner();
       } catch (e) {
-        expect(e.message).toContain(`not supplied: ${value}`);
+        if (e instanceof Error) {
+          expect(e.message).toContain(`not supplied: ${value}`);
+        }
       }
     },
   );
@@ -130,7 +132,9 @@ describe('SonarQube Scanner Action', () => {
     try {
       await sonarScanner();
     } catch (e) {
-      expect(e.message).toBe('SonarScanner failed');
+      if (e instanceof Error) {
+        expect(e.message).toBe('SonarScanner failed');
+      }
     }
   });
 });
