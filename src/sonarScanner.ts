@@ -30,6 +30,7 @@ export const sonarScanner = async () => {
   const qualityGateTimeout = core.getInput('qualityGateTimeout', {
     required: false,
   });
+  const organization = core.getInput('organization', { required: false });
 
   const sonarParameters: string[] = [
     `-Dsonar.login=${token}`,
@@ -43,6 +44,10 @@ export const sonarScanner = async () => {
 
   if (baseDir && baseDir.length > 0) {
     sonarParameters.push(`-Dsonar.projectBaseDir=${baseDir}`);
+  }
+
+  if (organization && organization.length > 0) {
+    sonarParameters.push(`-Dsonar.organization=${organization}`);
   }
 
   if (qualityGateTimeout && !runQualityGate) {
@@ -66,6 +71,7 @@ export const sonarScanner = async () => {
     isCommunityEdition          : ${isCommunityEdition}
     runQualityGate              : ${runQualityGate}
     qualityGateTimeout          : ${qualityGateTimeout}
+    organization                : ${organization}
   `);
 
   if (!isCommunityEdition) {
