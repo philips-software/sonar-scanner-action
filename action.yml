@@ -58,6 +58,10 @@ inputs:
     description: Number of seconds until build is failed for not passing quailty gate. Defaulted to 300 by SonarQube
     required: false
 
+  organization:
+    description: Organization in case of using sonarcloud
+    required: false
+
 outputs:
   sonarParameters:
     description: Sonar parameters generate based on input.

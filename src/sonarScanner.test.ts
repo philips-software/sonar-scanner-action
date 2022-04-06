@@ -86,6 +86,7 @@ describe('SonarQube Scanner Action', () => {
     delete process.env['INPUT_BASEDIR'];
   });
 
+
   it('Skips setting branch/pr if community edition', async () => {
     process.env['INPUT_ISCOMMUNITYEDITION'] = 'true';
 
@@ -117,6 +118,19 @@ describe('SonarQube Scanner Action', () => {
 
     await sonarScanner();
     expect(exec).not.toHaveBeenCalled();
+  });
+
+  it('starts the action when organization is set', async () => {
+    process.env['INPUT_ORGANIZATION'] = 'octocat';
+
+    await sonarScanner();
+    expect(exec).toHaveBeenCalledWith('sonar-scanner', [
+      ...defaultFlags,
+      '-Dsonar.organization=octocat',
+      '-Dsonar.branch.name=develop',
+    ]);
+
+    delete process.env['INPUT_ORGANIZATION'];
   });
 
   it('throws an error when SonarQube fails', async () => {
