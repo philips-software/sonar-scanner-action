@@ -33,6 +33,7 @@ Static Analysis using SonarQube
 | isCommunityEdition | Flags if your SonarQube instance is Community edition. Skips setting PRs/branches and defaults to master | `false` |  |
 | runQualityGate | Run the quality gate associated to this repo in SonarQube | `false` |  |
 | qualityGateTimeout | Number of seconds until build is failed for not passing quailty gate. Defaulted to 300 by SonarQube | `false` |  |
+| organization | Organization in case of using sonarcloud | `false` |  |
 
 
 
