@@ -111,6 +111,23 @@ sonarqube:
         url: https://your.sonar.instance.io/
         isCommunityEdition: true
 ```
+### Invoke the scanner with SonarQube Cloud
+
+_Argument `organization` is available since 1.4.0_
+
+```yml
+sonarqube:
+  name: SonarQube
+  runs-on: self-hosted
+  steps:
+    - uses: philips-software/sonar-scanner-action@<version>
+      with:
+        token: ${{ secrets.SONARQUBE_TOKEN }}
+        projectName: My Project Name
+        projectKey: project.key.from.sonar.qube
+        url: https://sonarcloud.io
+        organization: organization-on-sonarcloud
+```
 
 ### Create configuration for the scanner with pull request decoration
 
