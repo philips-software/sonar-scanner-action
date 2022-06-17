@@ -29,8 +29,8 @@ Static Analysis using SonarQube
 | scmProvider | SCM provider | `false` | git |
 | sourceEncoding | Encoding of the source files | `false` | UTF-8 |
 | enablePullRequestDecoration | Decorate a pull request. PR, branch and base are extracted from the pull request event | `false` |  |
-| onlyConfig | Generate sonar configuration, scanner will not be invoked. Sonar parameters are available as output | `false` |  |
-| isCommunityEdition | Flags if your SonarQube instance is Community edition. Skips setting PRs/branches and defaults to master | `false` |  |
+| onlyConfig | Generate sonar configuration, scanner will not be invoked. Sonar parameters are available as output | `false` | false |
+| isCommunityEdition | Flags if your SonarQube instance is Community edition. Skips setting PRs/branches and defaults to master | `false` | false |
 | runQualityGate | Run the quality gate associated to this repo in SonarQube | `false` |  |
 | qualityGateTimeout | Number of seconds until build is failed for not passing quailty gate. Defaulted to 300 by SonarQube | `false` |  |
 | organization | Organization in case of using sonarcloud | `false` |  |
