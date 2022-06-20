@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Use scanner version 4.7.0.2747
+
+## v1.4.0
+
+- Add optional organization argument by @JeroenKnoops in [#161](https://github.com/philips-software/sonar-scanner-action/pull/161)
+
+## v1.3.0
+
 - Use scanner version 4.6.2.2472
 
 ## v1.2.0 
