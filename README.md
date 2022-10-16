@@ -53,9 +53,9 @@ Static Analysis using SonarQube
 
 | Tool         | Version    |
 | ------------ | :--------- |
-| SonarScanner | 4.6.2.2472 |
-| Java         | 11.0.11    |
-| Node         | v16.4.2    |
+| SonarScanner | 4.7.0.2747 |
+| Java         | 11.0.15    |
+| Node         | v16.15.1   |
 | Python       | 2.7.16     |
 | Python       | 3.7.3      |
 
