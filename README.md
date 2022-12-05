@@ -13,14 +13,12 @@ The action support the following features
 ## Description
 
 Static Analysis using SonarQube
-
-
 <!-- action-docs-description -->
 <!-- action-docs-inputs -->
 ## Inputs
 
 | parameter | description | required | default |
-| - | - | - | - |
+| --- | --- | --- | --- |
 | projectName | Sonar Project name | `true` |  |
 | projectKey | Sonar Project Key | `true` |  |
 | baseDir | Project Base Directory | `false` |  |
@@ -34,19 +32,13 @@ Static Analysis using SonarQube
 | runQualityGate | Run the quality gate associated to this repo in SonarQube | `false` |  |
 | qualityGateTimeout | Number of seconds until build is failed for not passing quailty gate. Defaulted to 300 by SonarQube | `false` |  |
 | organization | Organization in case of using sonarcloud | `false` |  |
-
-
-
 <!-- action-docs-inputs -->
 <!-- action-docs-outputs -->
 ## Outputs
 
 | parameter | description |
-| - | - |
+| --- | --- |
 | sonarParameters | Sonar parameters generate based on input. |
-
-
-
 <!-- action-docs-outputs -->
 
 ## Environment
