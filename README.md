@@ -1,3 +1,7 @@
+# This action is deprecated in favour of the first party action available here - https://github.com/SonarSource/sonarqube-scan-action
+
+---
+
 # Sonar Scanner Action
 
 A GitHub action to configure and run the SonarQube scanner inside a [SonarQube Docker container](https://hub.docker.com/r/philipssoftware/sonar-scanner) and connect to a self hosted Sonar.
