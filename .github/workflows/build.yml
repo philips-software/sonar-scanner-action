@@ -9,7 +9,7 @@ jobs:
     container: philipssoftware/sonar-scanner:4.7.0.2747
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Install dependencies
         run: yarn install
       - name: Run tests
